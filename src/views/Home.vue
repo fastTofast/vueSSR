@@ -8,25 +8,25 @@
 
 <script>
 export default {
-  name: 'home',
+  name: "home",
   components: {}
-}
+};
 </script>
 <style lang="less" scoped>
-  .home{
-    display: flex;
-    flex-direction: column;
-    .header-nav{
-      height:2vh;
-      background-color:#cccccc;
-    }
-    .my-profile{
-      height:20vh;
-      background-color:#dddddd;
-    }
-    .main-nav{
-      height:78vh;
-      background-color:#eeeeee;
-    }
+.home {
+  display: flex;
+  flex-direction: column;
+  .header-nav {
+    height: 2vh;
+    background-color: #cccccc;
   }
+  .my-profile {
+    height: 20vh;
+    background-color: #dddddd;
+  }
+  .main-nav {
+    height: 78vh;
+    background-color: #eeeeee;
+  }
+}
 </style>

@@ -3,12 +3,13 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export function createRouter() {
+export function createRouter () {
   return new Router({
     mode: 'history',
+    base: 'vueserve',
     routes: [
       {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
       },
