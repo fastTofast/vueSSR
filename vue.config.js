@@ -6,9 +6,9 @@ const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/vueserve/' : '',
-  css: {
-    extract: process.env.NODE_ENV === 'production'
-  },
+  // css: {
+  //   extract: process.env.NODE_ENV === 'production'
+  // },
   devServer: {
     port: 8080,
     headers: { 'Access-Control-Allow-Origin': '*' }
