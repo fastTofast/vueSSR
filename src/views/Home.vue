@@ -1,9 +1,6 @@
 <template>
   <div class="home">
-    <div class="header-nav">
-      <span>Home</span>
-      <span>About</span>
-    </div>
+    <div class="header-nav"></div>
     <div class="my-profile"></div>
     <div class="main-nav"></div>
   </div>
