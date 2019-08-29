@@ -29,7 +29,6 @@ export default {
   }
   .main-nav {
     height: 60vh;
-    background-color: #eeeeee;
   }
 }
 </style>
