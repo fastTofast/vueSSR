@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 if (isDev) {
   app.use(async (ctx, next) => {
     if (/.+?\.(js|css|png|jpg|ttf|jpeg|json|svg|ico)$/.test(ctx.url)) {
-      ctx.redirect('http://localhost:8080' + ctx.url)
+      ctx.redirect('http://localhost:8080/' + ctx.url.split('/').reverse()[0])
     } else {
       await next()
     }

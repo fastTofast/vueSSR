@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <span @click="pageTo('/home')">Home</span>
-    <span @click="pageTo('/about')">About</span>
     <router-view />
   </div>
 </template>
 <script>
 export default {
   methods: {
-    pageTo(page) {
-      this.$router.push(page);
+    pageTo (page) {
+      this.$router.push(page)
     }
   }
-};
+}
 </script>
 <style lang="less">
 html,
