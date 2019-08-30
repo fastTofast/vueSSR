@@ -23,18 +23,18 @@ export default {
   flex-direction: column;
   .class-nav {
     height: 60vh;
-    background-color: #3d558c;
+    background-color: #19191b;
   }
   .my-profile {
     height: 35vh;
-    background-color: #feffff;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     .profile-content {
       width: 80%;
       height: 70%;
-      background-color: #3880c7;
+      background-color: #af4b4b;
       border-radius: 8px;
       display: flex;
       justify-content: center;
