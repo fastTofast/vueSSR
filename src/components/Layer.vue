@@ -18,7 +18,7 @@
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
 <style lang="less" scoped>
@@ -31,6 +31,7 @@ export default {}
     background-color: #ffffff;
     font-weight: 700;
     font-size: 18px;
+    padding: 0 5px;
     .left {
       height: 5vh;
       line-height: 5vh;
