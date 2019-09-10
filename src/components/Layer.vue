@@ -1,13 +1,15 @@
 <template>
   <div class="layer-com">
     <div class="header">
-      <div class="left">Vue List</div>
+      <div class="left">
+        <span class="logo" @click="$router.push('/chenxp/home')">Vue List</span>
+      </div>
       <div class="right">
         <div class="header-nav-item">
           <span>JS</span>
         </div>
         <div class="header-nav-item">
-          <span>Vue</span>
+          <span @click="$router.push('/chenxp/article/1')">Vue</span>
         </div>
       </div>
     </div>
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="less" scoped>
@@ -28,7 +30,7 @@ export default {};
   .header {
     display: flex;
     height: 5vh;
-    background-color: #ffffff;
+    background-color: #0e0e1d;
     font-weight: 700;
     font-size: 18px;
     padding: 0 5px;
@@ -37,6 +39,11 @@ export default {};
       line-height: 5vh;
       flex: 0 0 120;
       color: #666666;
+      .logo {
+        height: 5vh;
+        line-height: 5vh;
+        cursor: pointer;
+      }
     }
     .right {
       display: flex;
@@ -49,6 +56,7 @@ export default {};
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
         width: 60px;
         height: 100%;
         color: #666666;

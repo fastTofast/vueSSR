@@ -1,9 +1,10 @@
 <template>
   <div class="home">
     <div class="class-nav">
-      <div class="center-btn">
-        <span class="icon">+</span>
-        <span>众神归位</span>
+      <div class="center-btn" @click="checkShowList">
+        <transition name="center-btn">
+          <span>{{showList?'众神散退':'众神归位'}}</span>
+        </transition>
       </div>
     </div>
     <div class="my-profile">
@@ -18,9 +19,19 @@
 
 <script>
 export default {
-  name: "home",
-  components: {}
-};
+  name: 'home',
+  data () {
+    return {
+      showList: false
+    }
+  },
+  components: {},
+  methods: {
+    checkShowList () {
+      this.showList = !this.showList
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 .home {
@@ -30,6 +41,14 @@ export default {
     height: 60vh;
     position: relative;
     background-color: #19191b;
+    // .center-btn-enter,
+    // .center-btn-leave-to {
+    //   opacity: 0;
+    // }
+    // .center-btn-enter-to,
+    // .center-btn-leave {
+    //   opacity: 1;
+    // }
     .center-btn {
       height: 20vh;
       width: 20vh;
@@ -38,6 +57,7 @@ export default {
       justify-content: center;
       flex-direction: column;
       background-color: #af4b4b;
+      user-select: none;
       cursor: pointer;
       border-radius: 50%;
       position: absolute;
@@ -45,6 +65,10 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      span {
+        font-size: 20px;
+        color: #ffffff;
+      }
       span.icon {
         font-size: 80px;
         color: #ffffff;
