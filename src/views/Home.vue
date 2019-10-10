@@ -3,7 +3,7 @@
     <div class="class-nav">
       <div class="center-btn" @click="checkShowList">
         <transition name="center-btn">
-          <span>{{showList?'众神散退':'众神归位'}}</span>
+          <!-- <span>{{showList?'众神散退':'众神归位'}}</span> -->
         </transition>
       </div>
     </div>
