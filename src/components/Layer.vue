@@ -16,11 +16,20 @@
     <div class="main">
       <router-view></router-view>
     </div>
+    <div class="float-btn" @click="addArticle">
+      <span>+</span>
+    </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    addArticle () {
+      this.$router.push('/chenxp/addArticle')
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -66,6 +75,23 @@ export default {}
   .main {
     height: 95vh;
     background-color: #e1e1e1;
+  }
+  .float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    z-index: 9000;
+    background-color: #50acc1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    span {
+      font-size: 30px;
+    }
   }
 }
 </style>
