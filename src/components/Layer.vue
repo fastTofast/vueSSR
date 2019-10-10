@@ -16,7 +16,7 @@
     <div class="main">
       <router-view></router-view>
     </div>
-    <div class="float-btn" @click="addArticle">
+    <div class="float-btn" @click="addArticle" v-show="$route.name!=='addArticle'">
       <span>+</span>
     </div>
   </div>

@@ -15,9 +15,9 @@ export default {
 <style lang="less">
 html,
 body {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

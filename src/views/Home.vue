@@ -96,12 +96,12 @@ export default {
     justify-content: center;
     align-items: center;
     .profile-content {
-      width: 80%;
+      width: 70%;
       height: 70%;
       color: #ffffff;
       background-color: #af4b4b;
       border-radius: 8px;
-      transform: rotate(-5deg);
+      transform: rotate(-3deg);
       display: flex;
       justify-content: center;
       align-items: center;

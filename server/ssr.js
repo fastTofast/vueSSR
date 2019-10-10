@@ -11,6 +11,8 @@ if (isDev) {
   app.use(async (ctx, next) => {
     if (/.+?\.(js|css|png|jpg|ttf|jpeg|json|svg|ico)$/.test(ctx.url)) {
       ctx.redirect('http://localhost:8080/' + ctx.url.split('/').reverse()[0])
+    } else if (/\/chenxp\/addArticle/.test(ctx.url)) {
+      ctx.redirect('http://localhost:3002/chenxp/home')
     } else {
       await next()
     }
@@ -21,7 +23,7 @@ app.use(router.routes()).use(router.allowedMethods())
 // 开放目录
 app.use(koaStatic(resolve('../dist')))
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3002
 
 app.listen(port, () => {
   console.log(`server started at localhost:${port}`)
