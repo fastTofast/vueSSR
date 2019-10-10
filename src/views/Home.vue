@@ -1,11 +1,14 @@
 <template>
   <div class="home">
     <div class="class-nav">
-      <div class="center-btn" @click="checkShowList">
-        <transition name="center-btn">
-          <!-- <span>{{showList?'众神散退':'众神归位'}}</span> -->
-        </transition>
+      <div class="content">
+        <div class="center-btn" @click="checkShowList">
+          <transition name="center-btn">
+            <!-- <span>{{showList?'众神散退':'众神归位'}}</span> -->
+          </transition>
+        </div>
       </div>
+      <div class="bg-block"></div>
     </div>
     <div class="my-profile">
       <div class="profile-content">
@@ -41,6 +44,7 @@ export default {
     height: 60vh;
     position: relative;
     background-color: #19191b;
+    overflow: hidden;
     // .center-btn-enter,
     // .center-btn-leave-to {
     //   opacity: 0;
@@ -59,7 +63,7 @@ export default {
       background-color: #af4b4b;
       user-select: none;
       cursor: pointer;
-      border-radius: 50%;
+      border-radius: 5%;
       position: absolute;
       margin: 0 auto;
       top: 50%;
@@ -74,6 +78,16 @@ export default {
         color: #ffffff;
       }
     }
+    .bg-block {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffffff;
+      opacity: 0.1;
+      transform: rotate(15deg);
+      right: -70vw;
+      top: -10vh;
+    }
   }
   .my-profile {
     height: 35vh;
@@ -87,6 +101,7 @@ export default {
       color: #ffffff;
       background-color: #af4b4b;
       border-radius: 8px;
+      transform: rotate(-5deg);
       display: flex;
       justify-content: center;
       align-items: center;
