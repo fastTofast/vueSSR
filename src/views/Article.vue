@@ -38,14 +38,15 @@ export default {
   height: 100%;
   display: flex;
   .left {
-    background-color: #ac8383;
+    background-color: #383838;
     flex: 1 1 35%;
     max-width: 35%;
+    color: #ffffff;
     .list-item {
       text-align: left;
       padding-bottom: 10px;
       overflow: hidden;
-      border-bottom: 1px dashed #999999;
+      border-bottom: 1px dashed #af4b4b;
       .title {
         display: block;
         font-size: 18px;
@@ -53,13 +54,13 @@ export default {
       .profile {
         display: block;
         font-size: 14px;
-        color: #333333;
+        color: #e8e8e8;
       }
     }
   }
   .right {
     flex: 1 1 65%;
-    background-color: #50a5a1;
+    background-color: #cfcfcf;
     .article-detail{
       height: 100%;
       overflow-y: auto;

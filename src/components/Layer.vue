@@ -38,7 +38,7 @@ export default {}
       height: 5vh;
       line-height: 5vh;
       flex: 0 0 120;
-      color: #666666;
+      color: #af4b4b;
       .logo {
         height: 5vh;
         line-height: 5vh;
@@ -59,7 +59,7 @@ export default {}
         cursor: pointer;
         width: 60px;
         height: 100%;
-        color: #666666;
+        color: #af4b4b;
       }
     }
   }
