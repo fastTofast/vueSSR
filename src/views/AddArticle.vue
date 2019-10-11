@@ -1,5 +1,11 @@
 <template>
   <div class="tinymec-editor-com">
+    <div class="article-info">
+      <div class="info-item">
+        <span>标题</span>
+        <input type="text" />
+      </div>
+    </div>
     <div class="editor">
       <tinymec-editor v-model="article"></tinymec-editor>
     </div>

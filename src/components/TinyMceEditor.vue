@@ -9,16 +9,10 @@ import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
 import Editor from '@tinymce/tinymce-vue'
 import 'tinymce/plugins/image'
 import 'tinymce/plugins/link'
-import 'tinymce/plugins/code'
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/lists'
 import 'tinymce/plugins/advlist'
-import 'tinymce/plugins/fullscreen'
-import 'tinymce/plugins/media'
-import 'tinymce/plugins/hr'
-import 'tinymce/plugins/preview'
-import 'tinymce/plugins/paste'
-import 'tinymce/plugins/importcss'
+// import 'tinymce/plugins/importcss'
 import 'tinymce/plugins/wordcount'
 import '../assets/tinymec/skins/content/default/content.css'
 import '../assets/tinymec/skins/ui/oxide/content.min.css'
@@ -34,23 +28,17 @@ export default {
         language: 'zh_CN',
         // skin_url: '../assets/tinymec/skins/ui/oxide-dark',
         // GLOBAL
-        height: 800,
+        height: 600,
         // theme: 'silver',
         menubar: false,
         toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough | image | media | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview removeformat  hr | paste code  link | undo redo | fullscreen `,
         plugins: `
-            paste
-            importcss
             image
-            code
             table
             advlist
-            fullscreen
             link
-            media
             lists
-            hr
-            preview
+            wordcount
           `,
 
         // CONFIG
