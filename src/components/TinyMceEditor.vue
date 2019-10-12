@@ -11,6 +11,7 @@ import 'tinymce/plugins/image'
 import 'tinymce/plugins/link'
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/lists'
+import 'tinymce/plugins/paste'
 import 'tinymce/plugins/advlist'
 // import 'tinymce/plugins/importcss'
 import 'tinymce/plugins/wordcount'
@@ -24,20 +25,23 @@ export default {
     return {
       Id: Id,
       Editor: null,
-      DefaultConfig: {
+      defaultConfig: {
         language: 'zh_CN',
         // skin_url: '../assets/tinymec/skins/ui/oxide-dark',
         // GLOBAL
         height: 600,
         // theme: 'silver',
         menubar: false,
-        toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough | image | media | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview removeformat  hr | paste code  link | undo redo | fullscreen `,
+        toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough 
+        | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat
+        | link | undo redo`,
         plugins: `
             image
             table
             advlist
             link
             lists
+            paste
             wordcount
           `,
 
@@ -126,6 +130,7 @@ export default {
         tabfocus_elements: ':prev,:next',
         object_resizing: true,
         // Image
+        image_uploadtab: true,
         imagetools_toolbar:
           'rotateleft rotateright | flipv fliph | editimage imageoptions'
       },
@@ -178,36 +183,16 @@ export default {
     init () {
       const self = this
       return {
-        ...this.DefaultConfig,
+        ...this.defaultConfig,
         // 图片上传
         images_upload_handler: function (blobInfo, success, failure) {
           if (blobInfo.blob().size > self.maxSize) {
             failure('文件体积过大')
           }
-
           if (self.accept.indexOf(blobInfo.blob().type) >= 0) {
-            uploadPic()
+            self.$emit('uploading', { blobInfo, success, failure })
           } else {
             failure('图片格式错误')
-          }
-          function uploadPic () {
-            const xhr = new XMLHttpRequest()
-            const formData = new FormData()
-            xhr.withCredentials = self.withCredentials
-            xhr.open('POST', self.url)
-            xhr.onload = function () {
-              if (xhr.status !== 200) {
-                // 抛出 'on-upload-fail' 钩子
-                self.$emit('on-upload-fail')
-                failure('上传失败: ' + xhr.status)
-                return
-              }
-              const json = JSON.parse(xhr.responseText)
-              // 抛出 'on-upload-complete' 钩子
-              self.$emit('on-upload-complete', [json, success, failure])
-            }
-            formData.append('file', blobInfo.blob())
-            xhr.send(formData)
           }
         },
         // 挂载的DOM对象

@@ -1,6 +1,6 @@
 <template>
   <div class="layer-com">
-    <div class="header">
+    <!-- <div class="header">
       <div class="left">
         <span class="logo" @click="$router.push('/chenxp/home')">Vue List</span>
       </div>
@@ -12,7 +12,7 @@
           <span @click="$router.push('/chenxp/article/1')">Vue</span>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="main">
       <router-view></router-view>
     </div>
