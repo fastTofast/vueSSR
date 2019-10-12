@@ -6,7 +6,6 @@
 <script>
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
-import Editor from '@tinymce/tinymce-vue'
 import 'tinymce/plugins/image'
 import 'tinymce/plugins/link'
 import 'tinymce/plugins/table'
@@ -14,11 +13,11 @@ import 'tinymce/plugins/lists'
 import 'tinymce/plugins/paste'
 import 'tinymce/plugins/advlist'
 // import 'tinymce/plugins/importcss'
-import 'tinymce/plugins/wordcount'
-import '../assets/tinymec/skins/content/default/content.css'
-import '../assets/tinymec/skins/ui/oxide/content.min.css'
+// import 'tinymce/plugins/wordcount'
+// import '../assets/tinymec/skins/content/default/content.css'
+// import '../assets/tinymec/skins/ui/oxide/content.min.css'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
-import lang from '../assets/tinymec/langs/zh_CN'
+// import lang from '../assets/tinymec/langs/zh_CN'
 export default {
   data () {
     const Id = Date.now()
@@ -26,7 +25,7 @@ export default {
       Id: Id,
       Editor: null,
       defaultConfig: {
-        language: 'zh_CN',
+        // language: 'zh_CN',
         // skin_url: '../assets/tinymec/skins/ui/oxide-dark',
         // GLOBAL
         height: 600,
@@ -42,7 +41,6 @@ export default {
             link
             lists
             paste
-            wordcount
           `,
 
         // CONFIG
@@ -166,13 +164,14 @@ export default {
     }
   },
   components: {
-    Editor
+    Editor: () => import('@tinymce/tinymce-vue')
   },
   created () {
     this.initObj = this.init()
   },
   mounted () {
-    tinymce.addI18n('zh_CN', lang)
+    console.log(tinymce)
+    // tinymce.addI18n('zh_CN', lang)
   },
   beforeDestroy () {
     // 销毁tinymce
@@ -186,6 +185,7 @@ export default {
         ...this.defaultConfig,
         // 图片上传
         images_upload_handler: function (blobInfo, success, failure) {
+          debugger
           if (blobInfo.blob().size > self.maxSize) {
             failure('文件体积过大')
           }

@@ -5,11 +5,23 @@
         <span>标题</span>
         <input type="text" />
       </div>
+      <div class="info-item">
+        <span>分类</span>
+        <select @change="change($event,'classType')">
+          <option :value="item.val" v-for="(item,index) in classList" :key="index">{{item.label}}</option>
+        </select>
+      </div>
+      <div class="info-item">
+        <span>标签</span>
+        <select @change="change($event,'tag')">
+          <option :value="item.val" v-for="(item,index) in tagList" :key="index">{{item.label}}</option>
+        </select>
+      </div>
     </div>
     <div class="editor">
       <tinymec-editor v-model="article" :url="url" @uploading="uploading"></tinymec-editor>
     </div>
-    <div class="op-btn">
+    <div class="op-btn" @click="publish">
       <!-- <span>发布</span> -->
     </div>
   </div>
@@ -17,12 +29,30 @@
 
 <script>
 import tinymecEditor from '../components/TinyMceEditor'
-let CosAuth = require('../utils/tools/cos-auth')
 export default {
   data () {
     return {
       article: '',
-      url: ''
+      url: '',
+      classType: '',
+      tag: '',
+      classList: [
+        { value: '前端', label: '前端' },
+        { value: '原生', label: '原生' },
+        { value: '小程序', label: '小程序' },
+        { value: '后端', label: '后端' }
+      ],
+      tagList: [],
+      srcTagList: [
+        { value: 'vue', label: 'vue', class: '前端' },
+        { value: 'JS', label: 'JS', class: '前端' },
+        { value: 'uni app', label: 'uni app', class: '小程序' },
+        { value: 'Flutter', label: 'Flutter', class: '原生' },
+        { value: 'nodejs', label: 'nodejs', class: '后端' },
+        { value: 'docker', label: 'docker', class: '后端' },
+        { value: 'nginx', label: 'nginx', class: '后端' },
+        { value: '数据库', label: '数据库', class: '后端' }
+      ]
     }
   },
   components: {
@@ -38,6 +68,12 @@ export default {
     this.url = prefix
   },
   methods: {
+    change (e, prop) {
+      debugger
+      let selectDom = e.target
+      let index = selectDom.selectedIndex
+      this[prop] = selectDom.options[index].text
+    },
     async uploading ({ blobInfo, success, failure }) {
       const xhr = new XMLHttpRequest()
       const formData = new FormData()
@@ -52,10 +88,10 @@ export default {
         const json = JSON.parse(xhr.responseText)
         success(json)
       }
-      let Authorization = await this.getAuthorization()
+      // let Authorization = await this.getAuthorization()
       formData.append('file', blobInfo.blob())
-      formData.append('x-cos-security-token', Authorization.xCosSecurityToken)
-      formData.append('Signature ', Authorization.Signature)
+      // formData.append('x-cos-security-token', Authorization.xCosSecurityToken)
+      // formData.append('Signature ', Authorization.Signature)
       xhr.send(formData)
     },
     async getAuthorization () {
@@ -64,16 +100,10 @@ export default {
         method: 'post',
         body: JSON.stringify(params)
       })
-      let credentials = res.json()
-      return {
-        xCosSecurityToken: credentials.sessionToken,
-        Signature: CosAuth({
-          SecretId: credentials.tmpSecretId,
-          SecretKey: credentials.tmpSecretKey,
-          Method: 'post',
-          Pathname: '/frontend'
-        })
-      }
+      return res.json()
+    },
+    publish () {
+
     }
   }
 }
@@ -93,6 +123,14 @@ export default {
       cursor: pointer;
       color: #af4b4b;
       background-color: #0e0e1d;
+    }
+  }
+  .article-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .info-item {
+      margin-right: 20px;
     }
   }
 }
