@@ -1,6 +1,8 @@
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const nodeExternals = require('webpack-node-externals')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 const merge = require('lodash.merge')
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
@@ -40,7 +42,16 @@ module.exports = {
     optimization: {
       splitChunks: undefined
     },
-    plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
+    plugins: [
+      TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin(),
+      new CompressionWebpackPlugin({
+        filename: '[path].gz[query]', // 提示compression-webpack-plugin@3.0.0的话asset改为filename
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 50 * 1024,
+        minRatio: 0.8
+      })
+    ]
   }),
   chainWebpack: config => {
     config.module

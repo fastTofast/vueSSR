@@ -22,7 +22,7 @@
       <tinymec-editor v-model="article" :url="url" @uploading="uploading"></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
-      <!-- <span>发布</span> -->
+      <span>发布</span>
     </div>
   </div>
 </template>
