@@ -15,7 +15,13 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:7001/',
+        changeOrigin: true
+      }
+    }
   },
   configureWebpack: () => ({
     // 将 entry 指向应用程序的 server / client 文件
