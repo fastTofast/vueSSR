@@ -1,40 +1,48 @@
 <template>
   <div class="tinymec-editor-com">
     <div class="article-info">
-      <div class="info-item">
+      <div class="info-item title-input">
         <span>标题</span>
-        <input type="text" />
+        <input type="text" v-model="title" class="cus-input"/>
       </div>
       <div class="info-item">
         <span>分类</span>
-        <select @change="change($event,'classType')">
+        <select @change="change($event,'classType')" class="cus-selector">
           <option :value="item.val" v-for="(item,index) in classList" :key="index">{{item.label}}</option>
         </select>
       </div>
       <div class="info-item">
         <span>标签</span>
-        <select @change="change($event,'tag')">
+        <select @change="change($event,'tag')" class="cus-selector">
           <option :value="item.val" v-for="(item,index) in tagList" :key="index">{{item.label}}</option>
         </select>
       </div>
     </div>
     <div class="editor">
-      <tinymec-editor v-model="article" :url="url" @uploading="uploading"></tinymec-editor>
+      <tinymec-editor
+        v-model="article"
+        :url="url"
+        @uploading="uploading"
+        :getRemoteURL="getRemoteURL"
+      ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
-      <span>发布</span>
+      test
+      <!-- <span>发布</span> -->
     </div>
   </div>
 </template>
 
 <script>
 import tinymecEditor from '../components/TinyMceEditor'
+import { getAuth } from '../utils/tools'
 export default {
   data () {
     return {
+      title: '',
       article: '',
       url: '',
-      classType: '',
+      classType: '前端',
       tag: '',
       classList: [
         { value: '前端', label: '前端' },
@@ -44,8 +52,10 @@ export default {
       ],
       tagList: [],
       srcTagList: [
-        { value: 'vue', label: 'vue', class: '前端' },
+        { value: 'VUE', label: 'VUE', class: '前端' },
         { value: 'JS', label: 'JS', class: '前端' },
+        { value: 'HTML', label: 'HTML', class: '前端' },
+        { value: 'CSS', label: 'CSS', class: '前端' },
         { value: 'uni app', label: 'uni app', class: '小程序' },
         { value: 'Flutter', label: 'Flutter', class: '原生' },
         { value: 'nodejs', label: 'nodejs', class: '后端' },
@@ -58,53 +68,87 @@ export default {
   components: {
     tinymecEditor
   },
+  watch: {
+    classType: {
+      handler (val) {
+        this.tagList = this.srcTagList.filter(n => n.class === val)
+      },
+      immediate: true
+    }
+  },
   created () {
     let Bucket = 'image-1258776243'
     let Region = 'ap-chongqing'
     let protocol = location.protocol === 'https:' ? 'https:' : 'http:'
-    let dir = 'frontend'
-    let prefix =
-      protocol + '//' + Bucket + '.cos.' + Region + '.myqcloud.com/' + dir + '/'
-    this.url = prefix
+    let prefix = protocol + '//' + Bucket + '.cos.' + Region + '.myqcloud.com'
+    this.prefix = prefix
   },
   methods: {
     change (e, prop) {
-      debugger
       let selectDom = e.target
       let index = selectDom.selectedIndex
       this[prop] = selectDom.options[index].text
     },
-    async uploading ({ blobInfo, success, failure }) {
-      const xhr = new XMLHttpRequest()
-      const formData = new FormData()
-      xhr.withCredentials = self.withCredentials
-      xhr.open('POST', this.url + blobInfo.filename())
-      xhr.onload = function () {
-        debugger
-        if (xhr.status !== 200) {
-          failure('上传失败: ' + xhr.status)
-          return
-        }
-        const json = JSON.parse(xhr.responseText)
-        success(json)
+    async getRemoteURL (blob) {
+      let params = {
+        pathname: '/frontend/' + new Date().getTime() + '.png',
+        dir: 'frontend/*',
+        method: 'put'
       }
-      // let Authorization = await this.getAuthorization()
-      formData.append('file', blobInfo.blob())
-      // formData.append('x-cos-security-token', Authorization.xCosSecurityToken)
-      // formData.append('Signature ', Authorization.Signature)
-      xhr.send(formData)
-    },
-    async getAuthorization () {
-      let params = {}
-      let res = await fetch('', {
-        method: 'post',
-        body: JSON.stringify(params)
+      let authInfo = await getAuth(params)
+      console.log(authInfo)
+      await this.$http.put(this.prefix + params.pathname, blob, {
+        withCredentials: false,
+        headers: {
+          'Content-type': 'multipart/form-data',
+          Authorization: authInfo.Authorization,
+          'x-cos-security-token': authInfo.XCosSecurityToken
+        }
       })
-      return res.json()
+      return this.prefix + params.pathname
     },
-    publish () {
-
-    }
+    async uploading ({ blobInfo, success, failure }) {
+      // const formData = new FormData()
+      let params = {
+        pathname: '/frontend/' + new Date().getTime() + blobInfo.filename(),
+        dir: 'frontend/*',
+        method: 'put'
+      }
+      let authInfo = await getAuth(params)
+      console.log(authInfo)
+      await this.$http.put(this.prefix + params.pathname, blobInfo.blob(), {
+        withCredentials: false,
+        headers: {
+          'Content-type': 'multipart/form-data',
+          Authorization: authInfo.Authorization,
+          'x-cos-security-token': authInfo.XCosSecurityToken
+        }
+      })
+      success(this.prefix + params.pathname)
+      // let file = blobInfo.blob()
+      // var xhr = new XMLHttpRequest()
+      // xhr.open('PUT', this.prefix + params.pathname, true)
+      // xhr.setRequestHeader('Authorization', authInfo.Authorization)
+      // authInfo.XCosSecurityToken &&
+      //   xhr.setRequestHeader('x-cos-security-token', authInfo.XCosSecurityToken)
+      // xhr.upload.onprogress = function (e) {
+      //   console.log(
+      //     '上传进度 ' + Math.round((e.loaded / e.total) * 10000) / 100 + '%'
+      //   )
+      // }
+      // xhr.onload = function () {
+      //   if (/^2\d\d$/.test('' + xhr.status)) {
+      //     console.log(null, { url: this.prefix + params.pathname })
+      //   } else {
+      //     console.error('文件 ' + params.pathname + ' 上传失败，状态码：' + xhr.status)
+      //   }
+      // }
+      // xhr.onerror = function () {
+      //   console.error('文件 ' + params.pathname + ' 上传失败，请检查是否没配置 CORS 跨域规则')
+      // }
+      // xhr.send(file)
+    },
+    async publish () {}
   }
 }
 </script>
@@ -129,8 +173,21 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    margin: 20px 0;
+    padding: 0 10px;
     .info-item {
+      font-size: 16px;
+      display: flex;
       margin-right: 20px;
+      align-items: center;
+      span{
+        word-break: keep-all;
+        margin-right: 10px;
+      }
+    }
+    .title-input {
+      width: 100%;
+      margin-bottom: 18px;
     }
   }
 }

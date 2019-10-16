@@ -12,7 +12,7 @@ if (isDev) {
     if (/.+?\.(js|css|png|jpg|ttf|jpeg|json|svg|ico)$/.test(ctx.url)) {
       ctx.redirect('http://localhost:8080/' + ctx.url.split('/').reverse()[0])
     } else if (/\/chenxp\/addArticle/.test(ctx.url)) {
-      ctx.redirect('http://localhost:3002/chenxp/home')
+      ctx.redirect('http://192.168.3.160:3002/chenxp/home')
     } else {
       await next()
     }

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import tinymce from 'tinymce/tinymce'
+import Tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
 import 'tinymce/plugins/image'
 import 'tinymce/plugins/link'
@@ -132,7 +132,9 @@ export default {
         imagetools_toolbar:
           'rotateleft rotateright | flipv fliph | editimage imageoptions'
       },
-      initObj: {}
+      initObj: {},
+      editor: {},
+      imgClass: ''
     }
   },
   props: {
@@ -150,12 +152,19 @@ export default {
       default: '',
       type: String
     },
+    dataUrlLimit: {
+      default: 20 * 1024,
+      type: Number
+    },
+    getRemoteURL: {
+      type: Function
+    },
     accept: {
-      default: 'image/jpeg, image/png',
+      default: 'image/jpeg, image/png, image/webp',
       type: String
     },
     maxSize: {
-      default: 2097152,
+      default: 1024 * 1024,
       type: Number
     },
     withCredentials: {
@@ -170,8 +179,8 @@ export default {
     this.initObj = this.init()
   },
   mounted () {
-    console.log(tinymce)
-    // tinymce.addI18n('zh_CN', lang)
+    console.log(Tinymce)
+    // Tinymce.addI18n('zh_CN', lang)
   },
   beforeDestroy () {
     // 销毁tinymce
@@ -183,9 +192,61 @@ export default {
       const self = this
       return {
         ...this.defaultConfig,
-        // 图片上传
-        images_upload_handler: function (blobInfo, success, failure) {
+        paste_preprocess: async (plugin, args) => {
           debugger
+          // 粘贴上传,根据粘贴的图片大小判断是否粘贴为dataurl或者上传服务器
+          let uri = args.content.match(/^<img src="(.+?)".*>$/)
+          if (!uri) {
+            return
+          }
+          let convertImgToBlobviaCanvas = async url => {
+            const img = new Image()
+            return new Promise((resolve, reject) => {
+              img.crossOrigin = 'Anonymous' // canvas 不能处理跨域图片，如果要处理，除了服务端要开启跨域外，执行canvas操作前也要开启跨域
+              img.onload = function () {
+                let canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                canvas.height = this.height
+                canvas.width = this.width
+                ctx.drawImage(this, 0, 0)
+                canvas.toBlob(blob => {
+                  resolve(blob)
+                })
+                window.curDataURL = canvas.toDataURL('image/webp', 0.65)
+                canvas = null
+              }
+              img.src = url
+            })
+          }
+          if (uri && uri[1]) {
+            args.content = `<img src="">`
+            let blob = await convertImgToBlobviaCanvas(uri[1])
+            let newURL = ''
+            console.log(blob.size / 1024, 'Kb')
+            if (blob.size > this.dataUrlLimit) {
+              newURL = await this.getRemoteURL(blob)
+            } else {
+              newURL = window.curDataURL
+            }
+            this.$nextTick(() => {
+              const doc = Tinymce.activeEditor.dom
+              doc.select(`.${this.imgClass}`)[0].src = newURL
+              this.editor.fire('change')
+            })
+          }
+        },
+        paste_postprocess: (plugin, args) => {
+          let children = args.node.children
+          let imgNode = args.node.children[0]
+          if (!children || children.length > 1 || !imgNode) {
+            return
+          }
+          this.imgClass =
+            'temp' + new Date().getTime() + (Math.random() + '').slice(2)
+          imgNode.className = this.imgClass
+        },
+        // 图片上传
+        images_upload_handler: (blobInfo, success, failure) => {
           if (blobInfo.blob().size > self.maxSize) {
             failure('文件体积过大')
           }
@@ -198,15 +259,23 @@ export default {
         // 挂载的DOM对象
         // selector: `#${this.Id}`,
         setup: editor => {
-          // 抛出 'on-ready' 事件钩子
+          this.editor = editor
+          // 触发 'on-ready' 事件
           editor.on('init', () => {
             self.loading = false
             self.$emit('on-ready')
             editor.setContent(self.value)
           })
-          // 抛出 'input' 事件钩子，同步value数据
+          // 同步value数据
           editor.on('input change undo redo', () => {
-            self.$emit('input', editor.getContent())
+            // console.log(editor.getContent())
+            if (Tinymce.activeEditor) {
+              // console.log(Tinymce.activeEditor.dom.select('body')[0].innerHTML)
+              self.$emit(
+                'input',
+                Tinymce.activeEditor.dom.select('body')[0].innerHTML
+              )
+            }
           })
         },
         ...this.config
