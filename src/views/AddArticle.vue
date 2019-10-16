@@ -1,19 +1,19 @@
 <template>
   <div class="tinymec-editor-com">
     <div class="article-info">
-      <div class="info-item">
+      <div class="info-item title-input">
         <span>标题</span>
-        <input type="text" />
+        <input type="text" v-model="title" class="cus-input"/>
       </div>
       <div class="info-item">
         <span>分类</span>
-        <select @change="change($event,'classType')">
+        <select @change="change($event,'classType')" class="cus-selector">
           <option :value="item.val" v-for="(item,index) in classList" :key="index">{{item.label}}</option>
         </select>
       </div>
       <div class="info-item">
         <span>标签</span>
-        <select @change="change($event,'tag')">
+        <select @change="change($event,'tag')" class="cus-selector">
           <option :value="item.val" v-for="(item,index) in tagList" :key="index">{{item.label}}</option>
         </select>
       </div>
@@ -39,9 +39,10 @@ import { getAuth } from '../utils/tools'
 export default {
   data () {
     return {
+      title: '',
       article: '',
       url: '',
-      classType: '',
+      classType: '前端',
       tag: '',
       classList: [
         { value: '前端', label: '前端' },
@@ -51,8 +52,10 @@ export default {
       ],
       tagList: [],
       srcTagList: [
-        { value: 'vue', label: 'vue', class: '前端' },
+        { value: 'VUE', label: 'VUE', class: '前端' },
         { value: 'JS', label: 'JS', class: '前端' },
+        { value: 'HTML', label: 'HTML', class: '前端' },
+        { value: 'CSS', label: 'CSS', class: '前端' },
         { value: 'uni app', label: 'uni app', class: '小程序' },
         { value: 'Flutter', label: 'Flutter', class: '原生' },
         { value: 'nodejs', label: 'nodejs', class: '后端' },
@@ -64,6 +67,14 @@ export default {
   },
   components: {
     tinymecEditor
+  },
+  watch: {
+    classType: {
+      handler (val) {
+        this.tagList = this.srcTagList.filter(n => n.class === val)
+      },
+      immediate: true
+    }
   },
   created () {
     let Bucket = 'image-1258776243'
@@ -162,8 +173,21 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    margin: 20px 0;
+    padding: 0 10px;
     .info-item {
+      font-size: 16px;
+      display: flex;
       margin-right: 20px;
+      align-items: center;
+      span{
+        word-break: keep-all;
+        margin-right: 10px;
+      }
+    }
+    .title-input {
+      width: 100%;
+      margin-bottom: 18px;
     }
   }
 }

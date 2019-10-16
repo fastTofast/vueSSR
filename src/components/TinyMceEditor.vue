@@ -268,13 +268,14 @@ export default {
           })
           // 同步value数据
           editor.on('input change undo redo', () => {
-            console.log(editor.getContent())
-            this.$nextTick(function () {
-              if (Tinymce.activeEditor) {
-                console.log(Tinymce.activeEditor.dom.select('body')[0].innerHTML)
-                self.$emit('input', Tinymce.activeEditor.dom.select('body')[0].innerHTML)
-              }
-            })
+            // console.log(editor.getContent())
+            if (Tinymce.activeEditor) {
+              // console.log(Tinymce.activeEditor.dom.select('body')[0].innerHTML)
+              self.$emit(
+                'input',
+                Tinymce.activeEditor.dom.select('body')[0].innerHTML
+              )
+            }
           })
         },
         ...this.config
