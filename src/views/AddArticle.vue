@@ -23,7 +23,7 @@
         v-model="article"
         :url="url"
         @uploading="uploading"
-        :dataUrlUploading="dataUrlUploading"
+        :getRemoteURL="getRemoteURL"
       ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
@@ -78,7 +78,7 @@ export default {
       let index = selectDom.selectedIndex
       this[prop] = selectDom.options[index].text
     },
-    async dataUrlUploading (blob) {
+    async getRemoteURL (blob) {
       let params = {
         pathname: '/frontend/' + new Date().getTime() + '.png',
         dir: 'frontend/*',
