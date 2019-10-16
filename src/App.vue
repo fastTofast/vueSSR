@@ -45,8 +45,10 @@ body {
   }
   .cus-input {
     .common-input;
+    padding: 8px 10px;
     box-sizing: border-box;
     border-radius: 4px;
+    font-size: 18px;
     border: 1px solid #b2b2b2;
   }
 }
