@@ -25,7 +25,13 @@ function renderToString (context) {
     })
   })
 }
-
+app.use(async (ctx, next) => {
+  if (/\/chenxp\/addArticle/.test(ctx.url)) {
+    ctx.redirect(`${location.protocol}//${location.host}/chenxp/home`)
+  } else {
+    next()
+  }
+})
 // 第 3 步：添加一个中间件来处理所有请求
 app.use(async (ctx, next) => {
   const context = {
