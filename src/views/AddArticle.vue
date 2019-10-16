@@ -3,7 +3,7 @@
     <div class="article-info">
       <div class="info-item title-input">
         <span>标题</span>
-        <input type="text" v-model="title" class="cus-input"/>
+        <input type="text" v-model="title" class="cus-input" />
       </div>
       <div class="info-item">
         <span>分类</span>
@@ -125,30 +125,16 @@ export default {
         }
       })
       success(this.prefix + params.pathname)
-      // let file = blobInfo.blob()
-      // var xhr = new XMLHttpRequest()
-      // xhr.open('PUT', this.prefix + params.pathname, true)
-      // xhr.setRequestHeader('Authorization', authInfo.Authorization)
-      // authInfo.XCosSecurityToken &&
-      //   xhr.setRequestHeader('x-cos-security-token', authInfo.XCosSecurityToken)
-      // xhr.upload.onprogress = function (e) {
-      //   console.log(
-      //     '上传进度 ' + Math.round((e.loaded / e.total) * 10000) / 100 + '%'
-      //   )
-      // }
-      // xhr.onload = function () {
-      //   if (/^2\d\d$/.test('' + xhr.status)) {
-      //     console.log(null, { url: this.prefix + params.pathname })
-      //   } else {
-      //     console.error('文件 ' + params.pathname + ' 上传失败，状态码：' + xhr.status)
-      //   }
-      // }
-      // xhr.onerror = function () {
-      //   console.error('文件 ' + params.pathname + ' 上传失败，请检查是否没配置 CORS 跨域规则')
-      // }
-      // xhr.send(file)
     },
-    async publish () {}
+    async publish () {
+      let params = {
+        article: this.article,
+        tag: this.tag,
+        classType: this.classType
+      }
+      await this.$http.post('', params)
+      alert('成功')
+    }
   }
 }
 </script>
@@ -180,7 +166,7 @@ export default {
       display: flex;
       margin-right: 20px;
       align-items: center;
-      span{
+      span {
         word-break: keep-all;
         margin-right: 10px;
       }
