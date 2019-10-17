@@ -40,7 +40,7 @@ export default {
         params._id = ''
       }
       let articles = await this.$http.get('/article', { params })
-      this.selectedItem = articles.find(n => n._id === params._id)
+      this.selectedItem = articles.find(n => n._id === params._id) || {}
       this.articles = articles
     },
     selectItem (item) {
