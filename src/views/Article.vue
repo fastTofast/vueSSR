@@ -36,6 +36,9 @@ export default {
   },
   methods: {
     async getArticles (params) {
+      if (params._id === 'all') {
+        params._id = ''
+      }
       let articles = await this.$http.get('/article', { params })
       this.articles = articles
     },

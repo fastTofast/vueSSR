@@ -19,7 +19,7 @@ export function createRouter () {
             component: Home
           },
           {
-            path: 'article/:tag/:id',
+            path: 'article/:tag/:_id',
             name: 'article',
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route

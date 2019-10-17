@@ -6,10 +6,10 @@
       </div>
       <div class="right">
         <div class="header-nav-item">
-          <span @click="toPage('/chenxp/article/js/1')">JS</span>
+          <span @click="toPage('/chenxp/article/js/all')">JS</span>
         </div>
         <div class="header-nav-item">
-          <span @click="toPage('/chenxp/article/vue/1')">Vue</span>
+          <span @click="toPage('/chenxp/article/vue/all')">Vue</span>
         </div>
       </div>
     </div>
