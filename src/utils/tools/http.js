@@ -5,7 +5,7 @@ const axios = require('axios')
 // axios.defaults.headers.post['Content-Type'] = 'application/json'
 const ops = {
   withCredentials: true,
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://wwww.nodetop.top/chenxp' : 'http://127.0.0.1:7001'
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://wwww.nodetop.top/chenxp/api' : 'http://127.0.0.1:7001'
 }
 const instance = axios.create(ops)
 let loadingInstance
