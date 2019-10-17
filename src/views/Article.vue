@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="article-list-right">
-        <div v-if="selectedItem" class="article-detail" v-html="selectedItem.content"></div>
+        <div v-if="selectedItem._id" class="article-detail" v-html="selectedItem.content"></div>
         <div v-else class="article-detail" v-html="articles[0]&&articles[0].content"></div>
       </div>
     </div>
@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       articles: [],
-      selectedItem: null,
+      selectedItem: {},
       params: this.$route.params
     }
   },
@@ -40,6 +40,7 @@ export default {
         params._id = ''
       }
       let articles = await this.$http.get('/article', { params })
+      this.selectedItem = articles.find(n => n._id === params._id)
       this.articles = articles
     },
     selectItem (item) {
