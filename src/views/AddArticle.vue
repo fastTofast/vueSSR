@@ -14,7 +14,7 @@
       <div class="info-item">
         <span>标签</span>
         <select @change="change($event,'tag')" class="cus-selector">
-          <option :value="item.val" v-for="(item,index) in tagList" :key="index">{{item.label}}</option>
+          <option :value="item.value" v-for="(item,index) in tagList" :key="index">{{item.label}}</option>
         </select>
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
     change (e, prop) {
       let selectDom = e.target
       let index = selectDom.selectedIndex
-      this[prop] = selectDom.options[index].text
+      this[prop] = selectDom.options[index].value
     },
     async getRemoteURL (blob) {
       let params = {
