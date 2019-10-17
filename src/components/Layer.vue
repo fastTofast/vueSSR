@@ -1,18 +1,18 @@
 <template>
   <div class="layer-com">
-    <!-- <div class="header">
+    <div class="header">
       <div class="left">
-        <span class="logo" @click="$router.push('/chenxp/home')">Vue List</span>
+        <span class="logo" @click="toPage('/chenxp/home')">Vue List</span>
       </div>
       <div class="right">
         <div class="header-nav-item">
-          <span>JS</span>
+          <span @click="toPage('/chenxp/article/js/1')">JS</span>
         </div>
         <div class="header-nav-item">
-          <span @click="$router.push('/chenxp/article/1')">Vue</span>
+          <span @click="toPage('/chenxp/article/vue/1')">Vue</span>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="main">
       <router-view></router-view>
     </div>
@@ -26,7 +26,10 @@
 export default {
   methods: {
     addArticle () {
-      this.$router.push('/chenxp/addArticle')
+      this.$router.push({ path: '/chenxp/addArticle', query: {} })
+    },
+    toPage (path) {
+      this.$router.push({ path })
     }
   }
 }

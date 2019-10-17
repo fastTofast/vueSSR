@@ -52,12 +52,12 @@ export default {
       ],
       tagList: [],
       srcTagList: [
-        { value: 'VUE', label: 'VUE', class: '前端' },
-        { value: 'JS', label: 'JS', class: '前端' },
-        { value: 'HTML', label: 'HTML', class: '前端' },
-        { value: 'CSS', label: 'CSS', class: '前端' },
+        { value: 'vue', label: 'VUE', class: '前端' },
+        { value: 'js', label: 'JS', class: '前端' },
+        { value: 'html', label: 'HTML', class: '前端' },
+        { value: 'css', label: 'CSS', class: '前端' },
         { value: 'uni app', label: 'uni app', class: '小程序' },
-        { value: 'Flutter', label: 'Flutter', class: '原生' },
+        { value: 'flutter', label: 'Flutter', class: '原生' },
         { value: 'nodejs', label: 'nodejs', class: '后端' },
         { value: 'docker', label: 'docker', class: '后端' },
         { value: 'nginx', label: 'nginx', class: '后端' },
@@ -71,7 +71,9 @@ export default {
   watch: {
     classType: {
       handler (val) {
-        this.tagList = this.srcTagList.filter(n => n.class === val)
+        let tagList = this.srcTagList.filter(n => n.class === val)
+        this.tag = tagList[0].value
+        this.tagList = tagList
       },
       immediate: true
     }
@@ -128,11 +130,13 @@ export default {
     },
     async publish () {
       let params = {
-        article: this.article,
+        title: this.title,
+        content: this.article,
+        headerContent: 'test',
         tag: this.tag,
         classType: this.classType
       }
-      await this.$http.post('', params)
+      await this.$http.post('/article', params)
       alert('成功')
     }
   }

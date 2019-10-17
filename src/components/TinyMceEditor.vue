@@ -242,7 +242,7 @@ export default {
             return
           }
           this.imgClass =
-            'temp' + new Date().getTime() + (Math.random() + '').slice(2)
+            'temp' + new Date().getTime() + '-' + (Math.random() + '').slice(2)
           imgNode.className = this.imgClass
         },
         // 图片上传

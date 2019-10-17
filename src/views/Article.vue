@@ -1,16 +1,22 @@
 <template>
   <div class="article-list-com">
     <div class="main-content">
-      <div class="left">
+      <div class="article-list-left">
         <div class="list-header">
-          <div class="list-item" v-for="(item,index) in articles" :key="index">
+          <div
+            class="list-item"
+            v-for="(item,index) in articles"
+            :key="index"
+            @click="selectItem(item)"
+          >
             <strong class="title">{{item.title.slice(0,20)}}</strong>
-            <span class="profile">{{item.profile.slice(0,50)}}</span>
+            <!-- <span class="profile">{{item.profile.slice(0,50)}}</span> -->
           </div>
         </div>
       </div>
-      <div class="right">
-        <div class="article-detail"></div>
+      <div class="article-list-right">
+        <div v-if="selectedItem" class="article-detail" v-html="selectedItem.content"></div>
+        <div v-else class="article-detail" v-html="articles[0]&&articles[0].content"></div>
       </div>
     </div>
   </div>
@@ -19,13 +25,22 @@
 export default {
   data () {
     return {
-      articles: [
-        {
-          aid: '123',
-          title: '逍遥长生',
-          profile: '逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生逍遥长生'
-        }
-      ]
+      articles: [],
+      selectedItem: null,
+      params: this.$route.params
+    }
+  },
+  created () {
+    console.log(process.env.NODE_ENV)
+    this.getArticles(this.params)
+  },
+  methods: {
+    async getArticles (params) {
+      let articles = await this.$http.get('/article', { params })
+      this.articles = articles
+    },
+    selectItem (item) {
+      this.selectedItem = item
     }
   }
 }
@@ -37,15 +52,16 @@ export default {
 .main-content {
   height: 100%;
   display: flex;
-  .left {
+  .article-list-left {
     background-color: #383838;
-    flex: 1 1 35%;
-    max-width: 35%;
+    flex: 1 1 30%;
+    max-width: 30%;
     color: #ffffff;
     .list-item {
       text-align: left;
-      padding-bottom: 10px;
+      padding: 10px;
       overflow: hidden;
+      cursor: pointer;
       border-bottom: 1px dashed #af4b4b;
       .title {
         display: block;
@@ -58,12 +74,20 @@ export default {
       }
     }
   }
-  .right {
-    flex: 1 1 65%;
-    background-color: #cfcfcf;
-    .article-detail{
-      height: 100%;
-      overflow-y: auto;
+  .article-list-right {
+    flex: 1 1 70%;
+    overflow-y: auto;
+    background-color: #efefef;
+    &::-webkit-scrollbar {
+      width: 8px;
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: #cccccc;
+    }
+    .article-detail {
+      padding: 20px;
     }
   }
 }
