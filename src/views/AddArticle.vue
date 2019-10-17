@@ -128,11 +128,13 @@ export default {
     },
     async publish () {
       let params = {
-        article: this.article,
+        title: this.title,
         tag: this.tag,
-        classType: this.classType
+        classType: this.classType,
+        headerContent: 'test',
+        content: this.article
       }
-      await this.$http.post('', params)
+      await this.$http.post('/api/article', params)
       alert('成功')
     }
   }
