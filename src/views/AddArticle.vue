@@ -138,7 +138,8 @@ export default {
         classType: this.classType
       }
       await this.$http.post('/article', params)
-      alert('成功')
+      this.title = ''
+      this.article = ''
     }
   }
 }
