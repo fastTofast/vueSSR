@@ -28,8 +28,7 @@
       ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
-      test
-      <!-- <span>发布</span> -->
+      <span>发布</span>
     </div>
   </div>
 </template>

@@ -23,20 +23,20 @@
       <div class="login-content">
         <div class="login-item name">
           <span>名称</span>
-          <input class="cus-input " type="text" v-model="username" />
+          <input class="cus-input" type="text" v-model="username" />
         </div>
         <div class="login-item pwd">
           <span>密码</span>
-          <input class="cus-input " type="password" v-model="pwd" />
+          <input class="cus-input" type="password" v-model="pwd" />
         </div>
-        <span @click="login">Login</span>
+        <span class="login-btn" @click="login">Login</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getCookie } from '../utils/tools/index'
+import { getCookie } from '../utils/tools/index';
 export default {
   data () {
     return {
@@ -132,6 +132,7 @@ export default {
   }
   .login-flag {
     width: 60%;
+    max-width: 550px;
     height: 50%;
     margin: auto;
     padding: 20px;
@@ -141,18 +142,37 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px 0 #c5c5c5;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
     background-color: #fff;
     .login-content {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: center;
+      margin-top: 30%;
       .login-item {
         display: flex;
+        align-items: center;
         width: 100%;
         margin-bottom: 20px;
-        span{
+        span {
           flex: 0 0 50px;
         }
+      }
+      .login-btn {
+        display: inline-block;
+        width: 20vw;
+        margin-top: 20px;
+        border-radius: 4px;
+        height: 38px;
+        line-height: 38px;
+        text-align: center;
+        user-select: none;
+        cursor: pointer;
+        color: #af4b4b;
+        background-color: #0e0e1d;
       }
     }
   }
