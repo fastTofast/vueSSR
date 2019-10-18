@@ -113,6 +113,9 @@ export default {
     }
     .article-detail {
       padding: 20px;
+      & > div {
+        overflow-x: auto;
+      }
     }
   }
 }
