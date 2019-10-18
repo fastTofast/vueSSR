@@ -26,25 +26,46 @@ export default {
   data () {
     return {
       articles: [],
-      selectedItem: {},
-      params: this.$route.params
+      selectedItem: {}
+    }
+  },
+  computed: {
+    params () {
+      return this.$route.params
     }
   },
   created () {
     console.log(process.env.NODE_ENV)
-    this.getArticles(this.params)
+    if (this.params._id && this.params._id !== 'all') {
+      this.getById(this.params)
+    }
+    this.getAll()
+  },
+  watch: {
+    params (val) {
+      this.getById(val)
+    }
   },
   methods: {
-    async getArticles (params) {
-      if (params._id === 'all') {
-        params._id = ''
+    async getById (data) {
+      let params = {
+        condition: data
       }
       let articles = await this.$http.get('/article', { params })
-      this.selectedItem = articles.find(n => n._id === params._id) || {}
-      this.articles = articles
+      this.selectedItem = articles[0] || {}
+    },
+    async getAll () {
+      let params = {
+        condition: { tag: this.params.tag },
+        fields: 'title tag classType'
+      }
+      this.articles = (await this.$http.get('/article', { params })) || []
+      if (this.params._id === 'all') {
+        this.selectedItem = this.articles[0] || {}
+      }
     },
     selectItem (item) {
-      this.selectedItem = item
+      this.$router.push(`/chenxp/article/${item.tag}/${item._id}`)
     }
   }
 }

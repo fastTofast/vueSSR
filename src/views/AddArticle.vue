@@ -24,6 +24,7 @@
         :url="url"
         @uploading="uploading"
         :getRemoteURL="getRemoteURL"
+        :profileContent="profileContent"
       ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
@@ -42,6 +43,7 @@ export default {
       title: '',
       article: '',
       url: '',
+      profileContent: '',
       classType: '前端',
       tag: '',
       classList: [
@@ -132,6 +134,7 @@ export default {
       let params = {
         title: this.title,
         content: this.article,
+        profileContent: this.profileContent,
         tag: this.tag,
         classType: this.classType
       }

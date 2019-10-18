@@ -152,6 +152,10 @@ export default {
       default: '',
       type: String
     },
+    profileContent: {
+      default: '',
+      type: String
+    },
     dataUrlLimit: {
       default: 20 * 1024,
       type: Number
@@ -275,6 +279,10 @@ export default {
                 'input',
                 Tinymce.activeEditor.dom.select('body')[0].innerHTML
               )
+              this.profileContent = Tinymce.activeEditor.dom
+                .select('body')[0]
+                .innerText.replace(/[\n]/g, ' ')
+                .replace(/\s{2,}/g, '').slice(0, 300)
             }
           })
         },
