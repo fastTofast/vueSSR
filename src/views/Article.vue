@@ -114,11 +114,15 @@ export default {
       border-radius: 4px;
       background-color: #cccccc;
     }
-    .article-detail {
-      padding: 20px;
-      & > div {
-        overflow-x: auto;
-      }
+  }
+}
+</style>
+<style lang="less">
+.article-list-com {
+  .article-detail {
+    padding: 20px;
+    & > div {
+      overflow-x: auto;
     }
   }
 }
