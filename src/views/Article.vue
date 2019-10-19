@@ -36,17 +36,20 @@ export default {
   },
   created () {
     console.log(process.env.NODE_ENV)
-    if (this.params._id && this.params._id !== 'all') {
-      this.getById(this.params)
-    }
-    this.getAll()
+    this.init(this.params)
   },
   watch: {
     params (val) {
-      this.getById(val)
+      this.init(val)
     }
   },
   methods: {
+    init (val) {
+      if (this.params._id && this.params._id !== 'all') {
+        this.getById(this.params)
+      }
+      this.getAll()
+    },
     async getById (data) {
       let params = {
         condition: data
