@@ -12,14 +12,14 @@ import Tinymce from 'tinymce/tinymce'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
 import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
 import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
-import('tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
-import('../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
-import('tinymce/plugins/image')
-import('tinymce/plugins/link')
-import('tinymce/plugins/table')
-import('tinymce/plugins/lists')
-import('tinymce/plugins/paste')
-import('tinymce/plugins/advlist')
+import 'tinymce/themes/mobile/theme.min.js' // 引入富文本的主要脚本
+import '../assets/tinymec/skins/ui/oxide/skin.mobile.min.css'
+import 'tinymce/plugins/image'
+import 'tinymce/plugins/link'
+// import 'tinymce/plugins/table'
+import 'tinymce/plugins/lists'
+import 'tinymce/plugins/paste'
+import 'tinymce/plugins/advlist'
 // import lang from '../assets/tinymec/langs/zh_CN'
 export default {
   data () {
@@ -35,11 +35,10 @@ export default {
         // theme: 'silver',
         menubar: false,
         toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough 
-        | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat
+        | image | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat
         | link | undo redo`,
         plugins: `
             image
-            table
             advlist
             link
             lists
