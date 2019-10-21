@@ -11,15 +11,15 @@ import Tinymce from 'tinymce/tinymce'
 // import '../assets/tinymec/skins/ui/oxide/content.min.css'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
 import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
-import('tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
-import('tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
-import('../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
-import('tinymce/plugins/image')
-import('tinymce/plugins/link')
-import('tinymce/plugins/table')
-import('tinymce/plugins/lists')
-import('tinymce/plugins/paste')
-import('tinymce/plugins/advlist')
+import(/* webpackChunkName: "silver.theme" */ 'tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
+import(/* webpackChunkName: "mobile.theme" */ 'tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
+import(/* webpackChunkName: "mobile.theme.min." */ '../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
+import(/* webpackChunkName: "image" */ 'tinymce/plugins/image')
+import(/* webpackChunkName: "link" */ 'tinymce/plugins/link')
+import(/* webpackChunkName: "table" */ 'tinymce/plugins/table')
+import(/* webpackChunkName: "lists" */ 'tinymce/plugins/lists')
+import(/* webpackChunkName: "paste" */ 'tinymce/plugins/paste')
+import(/* webpackChunkName: "advlist" */ 'tinymce/plugins/advlist')
 // import lang from '../assets/tinymec/langs/zh_CN'
 export default {
   data () {
