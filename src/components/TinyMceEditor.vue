@@ -11,9 +11,9 @@ import Tinymce from 'tinymce/tinymce'
 // import '../assets/tinymec/skins/ui/oxide/content.min.css'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
 import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
-import(/* webpackChunkName: "silver.theme" */ 'tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
-import(/* webpackChunkName: "mobile.theme" */ 'tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
-import(/* webpackChunkName: "mobile.theme.min." */ '../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
+import('tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
+import('tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
+import('../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
 import(/* webpackChunkName: "image" */ 'tinymce/plugins/image')
 import(/* webpackChunkName: "link" */ 'tinymce/plugins/link')
 import(/* webpackChunkName: "table" */ 'tinymce/plugins/table')

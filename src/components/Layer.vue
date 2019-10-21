@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getCookie } from '../utils/tools/index';
+import { getCookie } from '../utils/tools/index'
 export default {
   data () {
     return {
