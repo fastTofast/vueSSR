@@ -24,7 +24,7 @@
         :url="url"
         @uploading="uploading"
         :getRemoteURL="getRemoteURL"
-        :profileContent="profileContent"
+        :profileContent.sync="profileContent"
       ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">

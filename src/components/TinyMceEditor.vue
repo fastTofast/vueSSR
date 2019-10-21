@@ -283,10 +283,14 @@ export default {
                 'input',
                 Tinymce.activeEditor.dom.select('body')[0].innerHTML
               )
-              // this.profileContent = Tinymce.activeEditor.dom
-              //   .select('body')[0]
-              //   .innerText.replace(/[\n]/g, ' ')
-              //   .replace(/\s{2,}/g, '').slice(0, 300)
+              this.$emit(
+                'update:profileContent',
+                Tinymce.activeEditor.dom
+                  .select('body')[0]
+                  .innerText.replace(/[\n]/g, ' ')
+                  .replace(/\s{2,}/g, '')
+                  .slice(0, 300)
+              )
             }
           })
         },
