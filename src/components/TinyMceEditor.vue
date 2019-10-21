@@ -5,18 +5,21 @@
 </template>
 <script>
 import Tinymce from 'tinymce/tinymce'
-import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
-import 'tinymce/plugins/image'
-import 'tinymce/plugins/link'
-import 'tinymce/plugins/table'
-import 'tinymce/plugins/lists'
-import 'tinymce/plugins/paste'
-import 'tinymce/plugins/advlist'
 // import 'tinymce/plugins/importcss'
 // import 'tinymce/plugins/wordcount'
 // import '../assets/tinymec/skins/content/default/content.css'
 // import '../assets/tinymec/skins/ui/oxide/content.min.css'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
+import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
+import('tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
+import('tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
+import('../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
+import('tinymce/plugins/image')
+import('tinymce/plugins/link')
+import('tinymce/plugins/table')
+import('tinymce/plugins/lists')
+import('tinymce/plugins/paste')
+import('tinymce/plugins/advlist')
 // import lang from '../assets/tinymec/langs/zh_CN'
 export default {
   data () {
@@ -183,8 +186,9 @@ export default {
     this.initObj = this.init()
   },
   mounted () {
-    console.log(Tinymce)
+    // console.log(Tinymce)
     // Tinymce.addI18n('zh_CN', lang)
+    // window.tinymce.init(this.initObj)
   },
   beforeDestroy () {
     // 销毁tinymce
@@ -196,6 +200,8 @@ export default {
       const self = this
       return {
         ...this.defaultConfig,
+        // 挂载的DOM对象
+        selector: '#test',
         paste_preprocess: async (plugin, args) => {
           debugger
           // 粘贴上传,根据粘贴的图片大小判断是否粘贴为dataurl或者上传服务器
@@ -260,8 +266,6 @@ export default {
             failure('图片格式错误')
           }
         },
-        // 挂载的DOM对象
-        // selector: `#${this.Id}`,
         setup: editor => {
           this.editor = editor
           // 触发 'on-ready' 事件
@@ -279,10 +283,10 @@ export default {
                 'input',
                 Tinymce.activeEditor.dom.select('body')[0].innerHTML
               )
-              this.profileContent = Tinymce.activeEditor.dom
-                .select('body')[0]
-                .innerText.replace(/[\n]/g, ' ')
-                .replace(/\s{2,}/g, '').slice(0, 300)
+              // this.profileContent = Tinymce.activeEditor.dom
+              //   .select('body')[0]
+              //   .innerText.replace(/[\n]/g, ' ')
+              //   .replace(/\s{2,}/g, '').slice(0, 300)
             }
           })
         },

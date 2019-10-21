@@ -28,8 +28,7 @@
       ></tinymec-editor>
     </div>
     <div class="op-btn" @click="publish">
-      test
-      <!-- <span>发布</span> -->
+      <span>发布</span>
     </div>
   </div>
 </template>
@@ -148,6 +147,7 @@ export default {
 <style lang="less">
 .tinymec-editor-com {
   .op-btn {
+    text-align: center;
     span {
       display: inline-block;
       width: 20vw;
