@@ -8,7 +8,7 @@
       <div class="info-item">
         <span>分类</span>
         <select @change="change($event,'classType')" class="cus-selector">
-          <option :value="item.val" v-for="(item,index) in classList" :key="index">{{item.label}}</option>
+          <option :value="item.value" v-for="(item,index) in classList" :key="index">{{item.label}}</option>
         </select>
       </div>
       <div class="info-item">
