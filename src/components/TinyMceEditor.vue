@@ -11,7 +11,7 @@ import Tinymce from 'tinymce/tinymce'
 // import '../assets/tinymec/skins/ui/oxide/content.min.css'
 import '../assets/tinymec/skins/ui/oxide/skin.min.css'
 import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
-import('tinymce/themes/silver/theme.min.js') // 引入富文本的主要脚本
+import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
 import('tinymce/themes/mobile/theme.min.js') // 引入富文本的主要脚本
 import('../assets/tinymec/skins/ui/oxide/skin.mobile.min.css')
 import('tinymce/plugins/image')
