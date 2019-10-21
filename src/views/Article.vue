@@ -36,17 +36,20 @@ export default {
   },
   created () {
     console.log(process.env.NODE_ENV)
-    if (this.params._id && this.params._id !== 'all') {
-      this.getById(this.params)
-    }
-    this.getAll()
+    this.init(this.params)
   },
   watch: {
     params (val) {
-      this.getById(val)
+      this.init(val)
     }
   },
   methods: {
+    init (val) {
+      if (this.params._id && this.params._id !== 'all') {
+        this.getById(this.params)
+      }
+      this.getAll()
+    },
     async getById (data) {
       let params = {
         condition: data
@@ -111,8 +114,15 @@ export default {
       border-radius: 4px;
       background-color: #cccccc;
     }
-    .article-detail {
-      padding: 20px;
+  }
+}
+</style>
+<style lang="less">
+.article-list-com {
+  .article-detail {
+    padding: 20px;
+    & > div {
+      overflow-x: auto;
     }
   }
 }
