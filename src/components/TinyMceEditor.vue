@@ -1,6 +1,6 @@
 <template>
   <div class="tiny-mec-editor">
-    <textarea name="" id="test" cols="30" rows="10"></textarea>
+    <textarea name id="test" cols="30" rows="10"></textarea>
     <!-- <editor :init="initObj"></editor> -->
   </div>
 </template>
@@ -33,7 +33,8 @@ export default {
         language: 'zh_CN',
         // GLOBAL
         suffix: '.min',
-        base_url: 'https://tinymec-1258776243.cos.ap-shenzhen-fsi.myqcloud.com/tinymce/js/tinymce',
+        base_url:
+          'https://tinymec-1258776243.cos.ap-shenzhen-fsi.myqcloud.com/tinymce/js/tinymce',
         height: 600,
         // theme: 'silver',
         menubar: false,
@@ -205,7 +206,6 @@ export default {
         // 挂载的DOM对象
         selector: '#test',
         paste_preprocess: async (plugin, args) => {
-          debugger
           // 粘贴上传,根据粘贴的图片大小判断是否粘贴为dataurl或者上传服务器
           let uri = args.content.match(/^<img src="(.+?)".*>$/)
           if (!uri) {
