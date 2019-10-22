@@ -1,26 +1,28 @@
 <template>
   <div class="tiny-mec-editor">
-    <editor :init="initObj"></editor>
+    <textarea name="" id="test" cols="30" rows="10"></textarea>
+    <!-- <editor :init="initObj"></editor> -->
   </div>
 </template>
 <script>
-import Tinymce from 'tinymce/tinymce'
-// import 'tinymce/plugins/importcss'
-// import 'tinymce/plugins/wordcount'
-// import '../assets/tinymec/skins/content/default/content.css'
-// import '../assets/tinymec/skins/ui/oxide/content.min.css'
-import '../assets/tinymec/skins/ui/oxide/skin.min.css'
-import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
-import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
-import 'tinymce/themes/mobile/theme.min.js' // 引入富文本的主要脚本
-import '../assets/tinymec/skins/ui/oxide/skin.mobile.min.css'
-import 'tinymce/plugins/image'
-import 'tinymce/plugins/link'
-// import 'tinymce/plugins/table'
-import 'tinymce/plugins/lists'
-import 'tinymce/plugins/paste'
-import 'tinymce/plugins/advlist'
-// import lang from '../assets/tinymec/langs/zh_CN'
+// import Tinymce from 'tinymce/tinymce'
+// // import 'tinymce/plugins/importcss'
+// // import 'tinymce/plugins/wordcount'
+// // import '../assets/tinymec/skins/content/default/content.css'
+// // import '../assets/tinymec/skins/ui/oxide/content.min.css'
+// import '../assets/tinymec/skins/ui/oxide/skin.min.css'
+// import 'tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff'
+// import 'tinymce/themes/silver/theme.min.js' // 引入富文本的主要脚本
+// import 'tinymce/themes/mobile/theme.min.js' // 引入富文本的主要脚本
+// import '../assets/tinymec/skins/ui/oxide/skin.mobile.min.css'
+// import 'tinymce/plugins/image'
+// import 'tinymce/plugins/link'
+// // import 'tinymce/plugins/table'
+// import 'tinymce/plugins/lists'
+// import 'tinymce/plugins/paste'
+// import 'tinymce/plugins/advlist'
+// // import lang from '../assets/tinymec/langs/zh_CN'
+// import('https://tinymec-1258776243.cos.ap-shenzhen-fsi.myqcloud.com/tinymce/js/tinymce/themes/silver/theme.min.js')
 export default {
   data () {
     const Id = Date.now()
@@ -28,9 +30,10 @@ export default {
       Id: Id,
       Editor: null,
       defaultConfig: {
-        // language: 'zh_CN',
-        // skin_url: '../assets/tinymec/skins/ui/oxide-dark',
+        language: 'zh_CN',
         // GLOBAL
+        suffix: '.min',
+        base_url: 'https://tinymec-1258776243.cos.ap-shenzhen-fsi.myqcloud.com/tinymce/js/tinymce',
         height: 600,
         // theme: 'silver',
         menubar: false,
@@ -179,7 +182,7 @@ export default {
     }
   },
   components: {
-    Editor: () => import('@tinymce/tinymce-vue')
+    // Editor: () => import('@tinymce/tinymce-vue')
   },
   created () {
     this.initObj = this.init()
@@ -187,12 +190,12 @@ export default {
   mounted () {
     // console.log(Tinymce)
     // Tinymce.addI18n('zh_CN', lang)
-    // window.tinymce.init(this.initObj)
+    window.tinymce.init(this.initObj)
   },
   beforeDestroy () {
     // 销毁tinymce
     this.$emit('on-destroy')
-    // window.tinymce.remove(`$#{this.Id}`)
+    // window.tinymce.remove('#test')
   },
   methods: {
     init () {
@@ -238,7 +241,7 @@ export default {
               newURL = window.curDataURL
             }
             this.$nextTick(() => {
-              const doc = Tinymce.activeEditor.dom
+              const doc = window.tinymce.activeEditor.dom
               doc.select(`.${this.imgClass}`)[0].src = newURL
               this.editor.fire('change')
             })
@@ -276,15 +279,15 @@ export default {
           // 同步value数据
           editor.on('input change undo redo', () => {
             // console.log(editor.getContent())
-            if (Tinymce.activeEditor) {
+            if (window.tinymce.activeEditor) {
               // console.log(Tinymce.activeEditor.dom.select('body')[0].innerHTML)
               self.$emit(
                 'input',
-                Tinymce.activeEditor.dom.select('body')[0].innerHTML
+                window.tinymce.activeEditor.dom.select('body')[0].innerHTML
               )
               this.$emit(
                 'update:profileContent',
-                Tinymce.activeEditor.dom
+                window.tinymce.activeEditor.dom
                   .select('body')[0]
                   .innerText.replace(/[\n]/g, ' ')
                   .replace(/\s{2,}/g, '')
