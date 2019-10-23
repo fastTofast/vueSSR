@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 if (isDev) {
   app.use(async (ctx, next) => {
     if (/.+?\.(js|css|png|jpg|ttf|jpeg|json|svg|ico|woff)$/.test(ctx.url)) {
-      ctx.redirect('http://localhost:8080/' + ctx.url.replace(/\/chenxp\//, ''))
+      ctx.redirect('http://localhost:8080/' + ctx.url.split('/').reverse()[0])
     } else if (/\/chenxp\/addArticle/.test(ctx.url)) {
       ctx.redirect('http://192.168.3.160:3002/chenxp/home')
     } else {

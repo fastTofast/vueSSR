@@ -28,7 +28,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    console.log(res)
     loadingInstance && loadingInstance.close()
     if (res.data.code === 0 || res.status === 200) {
       if (res.config.returnAll) {

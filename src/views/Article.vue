@@ -37,6 +37,7 @@ export default {
   created () {
     console.log(process.env.NODE_ENV)
     this.init(this.params)
+    this.seo()
   },
   watch: {
     params (val) {
@@ -54,16 +55,15 @@ export default {
       this.getAll()
     },
     seo () {
-      this.$http({
-        url:
-          'http://data.zz.baidu.com/urls?site=www.nodetop.top&token=YlWplV0AkoEkt7ZW',
+      let params = {
+        url: 'http://data.zz.baidu.com/urls?site=www.nodetop.top&token=YlWplV0AkoEkt7ZW',
         method: 'post',
         data: 'https://www.nodetop.top/chenxp' + this.$route.fullPath,
-        withCredentials: false,
         headers: {
-          'Content-type': 'text/plain'
+          'Content-Type': 'text/plain'
         }
-      })
+      }
+      this.$http.post('/api/seo', params)
     },
     async getById (data) {
       let params = {
