@@ -41,6 +41,9 @@ export default {
   watch: {
     params (val) {
       this.init(val)
+    },
+    $route () {
+      this.seo()
     }
   },
   methods: {
@@ -49,6 +52,18 @@ export default {
         this.getById(this.params)
       }
       this.getAll()
+    },
+    seo () {
+      this.$http({
+        url:
+          'http://data.zz.baidu.com/urls?site=www.nodetop.top&token=YlWplV0AkoEkt7ZW',
+        method: 'post',
+        data: 'https://www.nodetop.top/chenxp' + this.$route.fullPath,
+        withCredentials: false,
+        headers: {
+          'Content-type': 'text/plain'
+        }
+      })
     },
     async getById (data) {
       let params = {
