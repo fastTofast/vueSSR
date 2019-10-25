@@ -140,7 +140,8 @@ export default {
       },
       initObj: {},
       editor: {},
-      imgClass: ''
+      imgClass: '',
+      timeout: ''
     }
   },
   props: {
@@ -188,17 +189,26 @@ export default {
   mounted () {
     // console.log(Tinymce)
     // Tinymce.addI18n('zh_CN', lang)
-    this.initObj = this.init()
-    this.$nextTick(function () {
-      window.tinymce.init(this.initObj)
-    })
+    this.loopTinymce()
   },
   beforeDestroy () {
     // 销毁tinymce
     this.$emit('on-destroy')
     window.tinymce.remove('.editor-section')
+    clearTimeout(this.timeout)
   },
   methods: {
+    loopTinymce () {
+      if (window.tinymce) {
+        clearTimeout(this.timeout)
+        this.initObj = this.init()
+        window.tinymce.init(this.initObj)
+      } else {
+        this.timeout = setTimeout(() => {
+          this.loopTinymce()
+        }, 500)
+      }
+    },
     init () {
       const self = this
       return {
