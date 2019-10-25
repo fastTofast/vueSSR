@@ -5,11 +5,11 @@
         <span class="logo" @click="toPage('/chenxp/home')">Vue List</span>
       </div>
       <div class="right">
-        <div class="header-nav-item">
-          <span @click="toPage('/chenxp/article/js/all')">JS</span>
+        <div class="header-nav-item" @click="toPage('/chenxp/article/js/all')">
+          <span>JS</span>
         </div>
-        <div class="header-nav-item">
-          <span @click="toPage('/chenxp/article/vue/all')">Vue</span>
+        <div class="header-nav-item" @click="toPage('/chenxp/article/vue/all')">
+          <span>Vue</span>
         </div>
       </div>
     </div>

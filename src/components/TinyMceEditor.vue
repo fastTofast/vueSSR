@@ -1,6 +1,6 @@
 <template>
   <div class="tiny-mec-editor">
-    <textarea name id="test" cols="30" rows="10"></textarea>
+    <textarea class="editor-section"></textarea>
     <!-- <editor :init="initObj"></editor> -->
   </div>
 </template>
@@ -38,17 +38,17 @@ export default {
         height: 600,
         // theme: 'silver',
         menubar: false,
-        toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough 
-        | image | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat
-        | link | undo redo`,
+        toolbar: `styleselect | fontselect | formatselect | fontsizeselect | forecolor | backcolor | bold italic underline strikethrough
+        | image | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat | blockquote
+        | link | undo redo | emoticons`,
         plugins: `
             image
             advlist
             link
             lists
-            paste
+            paste,
+            emoticons 
           `,
-
         // CONFIG
         forced_root_block: 'p',
         force_p_newlines: true,
@@ -185,18 +185,18 @@ export default {
   components: {
     // Editor: () => import('@tinymce/tinymce-vue')
   },
-  created () {
-    this.initObj = this.init()
-  },
   mounted () {
     // console.log(Tinymce)
     // Tinymce.addI18n('zh_CN', lang)
-    window.tinymce.init(this.initObj)
+    this.initObj = this.init()
+    this.$nextTick(function () {
+      window.tinymce.init(this.initObj)
+    })
   },
   beforeDestroy () {
     // 销毁tinymce
     this.$emit('on-destroy')
-    // window.tinymce.remove('#test')
+    window.tinymce.remove('.editor-section')
   },
   methods: {
     init () {
@@ -204,7 +204,7 @@ export default {
       return {
         ...this.defaultConfig,
         // 挂载的DOM对象
-        selector: '#test',
+        selector: '.editor-section',
         paste_preprocess: async (plugin, args) => {
           // 粘贴上传,根据粘贴的图片大小判断是否粘贴为dataurl或者上传服务器
           let uri = args.content.match(/^<img src="(.+?)".*>$/)
