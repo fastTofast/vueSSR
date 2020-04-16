@@ -3,4 +3,4 @@
 ### 使用vue ssr开发的一个web网站
 ### 使用了docker部署，nginx代理
 ### 集成tinymce富文本编辑器
-[地址](https://www.nodetop.top/chenxp/home)
+[网站地址](https://www.nodetop.top/chenxp/home)
